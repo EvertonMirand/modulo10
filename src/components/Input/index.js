@@ -15,10 +15,12 @@ function Input({ style, icon, ...rest }, ref) {
 
 Input.propTypes = {
   style: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  icon: PropTypes.string,
 };
 
 Input.defaultProps = {
   style: {},
+  icon: null,
 };
 
 export default forwardRef(Input);
