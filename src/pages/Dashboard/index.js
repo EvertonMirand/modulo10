@@ -1,35 +1,40 @@
 import React, { useEffect, useState } from 'react';
+
 import { Platform } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Background from '~/components/Background';
+import { withNavigationFocus } from 'react-navigation';
 
+import Background from '~/components/Background';
 import { Container, Title, List } from './styles';
 import Appointment from '~/components/Appointment';
 import api from '~/services/api';
 
-export default function Dashboard() {
+export function Dashboard({ isFocused }) {
   const [appointments, setAppointments] = useState([]);
-  useEffect(() => {
-    async function loadAppointments() {
-      const response = await api.get('appointments');
 
-      if (Platform.OS === 'android') {
-        response.data.map(appointment => {
-          const { avatar } = appointment.provider;
-          if (avatar) {
-            appointment.provider.avatar.url = avatar.url.replace(
-              'localhost',
-              '10.0.0.100'
-            );
-          }
-        });
-      }
-      setAppointments(response.data);
+  async function loadAppointments() {
+    const response = await api.get('appointments');
+
+    if (Platform.OS === 'android') {
+      response.data.map(appointment => {
+        const { avatar } = appointment.provider;
+        if (avatar) {
+          appointment.provider.avatar.url = avatar.url.replace(
+            'localhost',
+            '10.0.0.100'
+          );
+        }
+      });
     }
+    setAppointments(response.data);
+  }
 
-    loadAppointments();
-  }, []);
+  useEffect(() => {
+    if (isFocused) {
+      loadAppointments();
+    }
+  }, [isFocused]);
 
   async function handleCancel(id) {
     const response = await api.delete(`appointments/${id}`);
@@ -69,3 +74,5 @@ Dashboard.navigationOptions = {
     <Icon name="event" size={20} color={tintColor} />
   ),
 };
+
+export default withNavigationFocus(Dashboard);
