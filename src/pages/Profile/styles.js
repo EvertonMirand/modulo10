@@ -37,3 +37,9 @@ export const SubmitButton = styled(Button)`
   margin-top: 5px;
   align-self: stretch;
 `;
+
+export const LogoutButton = styled(Button)`
+  margin-top: 10px;
+  align-self: stretch;
+  background: #f64c75;
+`;
