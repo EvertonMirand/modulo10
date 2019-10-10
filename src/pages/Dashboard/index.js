@@ -63,7 +63,7 @@ export default function Dashboard() {
 }
 
 Dashboard.navigationOptions = {
-  tabBarlael: 'Agendamentos',
+  tabBarLabel: 'Agendamentos',
   tabBarIcon: ({ tintColor }) => (
     <Icon name="event" size={20} color={tintColor} />
   ),
